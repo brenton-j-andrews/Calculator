@@ -36,4 +36,17 @@ function operate(symbol, a, b) {
     return output;
 }
 
-console.log(operate("/", 4, 6));
+// let screen_contents = document.getElementById("screen");
+// screen_contents.textContent = "Hello"
+
+// Function to add event listeners to each button upon start.
+function addEvents() {
+    let buttons = document.getElementsByClassName("btn");
+    for (const button of buttons) {
+        button.addEventListener("click", function() {
+            console.log(button.textContent);
+        });
+    }
+}
+
+addEvents()
