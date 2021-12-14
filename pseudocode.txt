@@ -1,0 +1,13 @@
+Pseudocode for operand button input.
+
+Step 1: Implement single digit integer addition using buttons and return output to console log. Ex: 2 + 2 -> 4.
+Note: Multi-digit functionality and stringing multiple operations will be added later!
+
+
+1. Initialize two empty null variables, "operandA" and "operandB", and an empty string variable "operator".
+2. If button pressed has an id of num, start this sequence:
+
+1. If operandA is empty, value of button pressed will be assigned to operandA. Else, value will be assigned to operandB.
+2. To continue, button with id of operator must be pressed. Its value will be assinged to "operator" variable.
+3. To continue, equals button must be pressed. This will call the operate() function, passing operandA, operandB and operator as arguments.
+4. operate() will return the output value, which will be assinged to operandA. operandB reset to null, operator reset to empty string.
