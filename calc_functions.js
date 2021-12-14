@@ -41,42 +41,98 @@ function operate(symbol, a, b) {
 
 // Function to add event listeners to each button upon start.
 function addEvents() {
-    let operandA = null;
-    let operandB = null;
+    let operandA = "";
+    let operandB = "";
     let operator = "";
+    let operatorSelected = false;
     let buttons = document.getElementsByClassName("btn");
     for (const button of buttons) {
         button.addEventListener("click", function() {
 
-            // Number button events.
-            if (button.id == "num") {
-                if (operandA == null) {
-                    operandA = Number(button.textContent);
+            // Clear button event. Reset to starting status.
+            if (button.id == "clear") {
+                operandA = "";
+                operandB = "";
+                operator = "";
+                operatorSelected = false;
+                console.log(operandA);
+            }
+
+            // Delete button event. Remove last digit from current operand.
+            if (button.id == "delete") {
+                if (operatorSelected === false) {
+                    operandA = operandA.toString().slice(0, -1);
                     console.log(operandA);
                 } else {
-                    operandB = Number(button.textContent);
+                    operandB = operandB.toString().slice(0, -1);
                     console.log(operandB);
                 }
             }
+            // Number button events.
+            if (button.id == "num") {
 
-            // Operator button events.
-            if (button.id == "operator") {
-                operator = button.textContent;
-                console.log(operator);
+                // If no operator button pressed, operandA is the one to edit.
+                if (operatorSelected === false) {
+                    if (operandA == "") {
+                        operandA = button.textContent;
+                        console.log("A: " + operandA);
+                    } else {
+                        operandA += button.textContent;
+                        console.log("A: " + operandA);
+                    }
+
+                } else {
+                    if (operandB == "") {
+                        operandB = button.textContent;
+                        console.log("B: " + operandB);
+                    } else {
+                        operandB += button.textContent;
+                        console.log("B: " + operandB);
+                    }
+                }
+            }
+
+            // Operator button event.
+            if (button.id === "operator") {
+                // Allow for operators to be chained together.
+                if (operandA != "" && operandB != "") {
+                    console.log("First operator: " + operator);
+                    let output = operate(operator, Number(operandA), Number(operandB));
+                    console.log(output);
+
+                    if (output != undefined) {
+                        operandA = output;
+                    } else {
+                        operandA = "";
+                    }
+                    operator = button.textContent;
+                    operandB = "";
+                    console.log(output);
+                }
+
+                // Prevent operandA from being skipped if an operator button is pressed beforehand.
+                else if (operandA != "") {
+                    operator = button.textContent;
+                    operatorSelected = true;
+                } 
+                
             }
 
             // Equals button event.
-            if (button.id == "equals") {
-                let output = operate(operator, operandA, operandB);
-                operandA = output;
-                operandB = null;
-                console.log(output);
+            if (button.id === "equals" && operator != "" && operandA != "" && operandB != "") {
+                let output = operate(operator, Number(operandA), Number(operandB));
+                if (output != undefined) {
+                    operandA = output;
+                } else {
+                    operandA = "";
+                }
+                operandB = "";
+                operatorSelected = false;
+                console.log("Output: " + operandA);
             }
         });
     }
 }
 
-
-// Function to toggle isOperand. Used to create next operand after operator button pressed.
 
 addEvents()

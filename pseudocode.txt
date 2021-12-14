@@ -11,3 +11,24 @@ Note: Multi-digit functionality and stringing multiple operations will be added 
 2. To continue, button with id of operator must be pressed. Its value will be assinged to "operator" variable.
 3. To continue, equals button must be pressed. This will call the operate() function, passing operandA, operandB and operator as arguments.
 4. operate() will return the output value, which will be assinged to operandA. operandB reset to null, operator reset to empty string.
+
+
+Step 2: Add functionality that allows for multi digit numbers. Ex: 22 + 323 = 355.
+
+Pseudocode:
+1. Initialize boolean variable operatorSelected = False;
+2. Get first digit of operandA as described above.
+3. While operatorSelected = False, append any additional "num" values to operandA.
+4. Once operand is selected, operatorSelected = True.
+5. If operatorSelected = True, next "num" value will be assigned to operandB and additional "num" values appended until equalsSelected = True.
+6. Once = button is selected, equalsSelected = false, ending altering of operandB.
+7. Convert operandA and operandB to numbers and pass to operate().
+
+Edge case:
+1. Someone might click an operator button before a number. If operandA is still null, ignore any operator buttons.
+
+Step 3: Allow for chaining multiple operators together without hitting equals sign. Ex: 10 * 3 + 5 / 5 = 7. Don't worry about PEMADS I guess.
+
+Pseudocode:
+1. Condition for chaining operators: both operands have values and operator selected. This condition placed in if statement with "equals" button.
+2. 
