@@ -47,6 +47,7 @@ function addEvents() {
     let operatorSelected = false;
     let buttons = document.getElementsByClassName("btn");
     let screen_content = "";
+    let output_content = "";
     let statement_screen = document.getElementById("statement");
     let output_screen = document.getElementById("statement_output")
     for (const button of buttons) {
@@ -58,19 +59,37 @@ function addEvents() {
                 operandB = "";
                 operator = "";
                 operatorSelected = false;
-                console.log(operandA);
+                screen_content = "";
+                output_content = "";
             }
 
-            // Delete button event. Remove last digit from current operand.
+            // Delete button event. Remove last digit from current statement.
             if (button.id == "delete") {
+
+                // Delete operandA contents.
                 if (operatorSelected === false) {
                     operandA = operandA.toString().slice(0, -1);
-                    console.log(operandA);
-                } else {
-                    operandB = operandB.toString().slice(0, -1);
-                    console.log(operandB);
+                    screen_content = operandA;
+                } 
+                
+                // Delete operandB and / or operator.
+                else if (operatorSelected === true) {
+
+                    // Delete operator.
+                    if (operandB === "") {
+                        operator = "";
+                        operatorSelected = false;
+                        screen_content = operandA;
+                    } 
+                    
+                    // Delete operandB.
+                    else {
+                        operandB = operandB.toString().slice(0, -1);
+                        screen_content = operandA + operator + operandB;
+                    }
                 }
             }
+
             // Number button events.
             if (button.id == "num") {
 
@@ -80,16 +99,13 @@ function addEvents() {
                         operandA = button.textContent;
                     } else {
                         operandA += button.textContent;
-                        console.log("A: " + operandA);
                     }
 
                 } else {
                     if (operandB == "") {
                         operandB = button.textContent;
-                        console.log("B: " + operandB);
                     } else {
                         operandB += button.textContent;
-                        console.log("B: " + operandB);
                     }
                 }
                 screen_content += button.textContent;
@@ -99,10 +115,8 @@ function addEvents() {
             if (button.id === "operator") {
                 // Allow for operators to be chained together.
                 if (operandA != "" && operandB != "") {
-                    console.log("First operator: " + operator);
                     let output = operate(operator, Number(operandA), Number(operandB));
                     console.log(output);
-
                     if (output != undefined) {
                         operandA = output;
                     } else {
@@ -110,7 +124,6 @@ function addEvents() {
                     }
                     operator = button.textContent;
                     operandB = "";
-                    console.log(output);
                 }
 
                 // Prevent operandA from being skipped if an operator button is pressed beforehand.
@@ -131,11 +144,11 @@ function addEvents() {
                 }
                 operandB = "";
                 operatorSelected = false;
-                console.log("Output: " + operandA);
-                output_screen.textContent = operandA;
+                output_content = output;
             }
 
             statement_screen.textContent = screen_content;
+            output_screen.textContent = output_content;
         });
     }
 }
