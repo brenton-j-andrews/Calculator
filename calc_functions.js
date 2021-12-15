@@ -18,18 +18,18 @@ function multiply(a, b) {
 
 function operate(symbol, a, b) {
     let output;
-    if (symbol === "+") {
+    if (symbol === " + ") {
         output = add(a, b);   
     } 
-    else if (symbol === "-") {
+    else if (symbol === " - ") {
         output = subtract(a, b);
     }
 
-    else if (symbol === "/") {
+    else if (symbol === " / ") {
         output = divide(a, b);
     }
 
-    else if (symbol === "*") {
+    else if (symbol === " * ") {
         output = multiply(a, b);
     }
 
@@ -46,6 +46,9 @@ function addEvents() {
     let operator = "";
     let operatorSelected = false;
     let buttons = document.getElementsByClassName("btn");
+    let screen_content = "";
+    let statement_screen = document.getElementById("statement");
+    let output_screen = document.getElementById("statement_output")
     for (const button of buttons) {
         button.addEventListener("click", function() {
 
@@ -75,7 +78,6 @@ function addEvents() {
                 if (operatorSelected === false) {
                     if (operandA == "") {
                         operandA = button.textContent;
-                        console.log("A: " + operandA);
                     } else {
                         operandA += button.textContent;
                         console.log("A: " + operandA);
@@ -90,6 +92,7 @@ function addEvents() {
                         console.log("B: " + operandB);
                     }
                 }
+                screen_content += button.textContent;
             }
 
             // Operator button event.
@@ -115,7 +118,7 @@ function addEvents() {
                     operator = button.textContent;
                     operatorSelected = true;
                 } 
-                
+                screen_content += button.textContent;
             }
 
             // Equals button event.
@@ -129,7 +132,10 @@ function addEvents() {
                 operandB = "";
                 operatorSelected = false;
                 console.log("Output: " + operandA);
+                output_screen.textContent = operandA;
             }
+
+            statement_screen.textContent = screen_content;
         });
     }
 }

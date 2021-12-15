@@ -20,6 +20,9 @@ body {
 
 
 .screen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 100px;
     width: 250px; 
     background-color: lightgrey;  
