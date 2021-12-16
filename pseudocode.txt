@@ -31,5 +31,9 @@ Edge case:
 (Almost..) End of project update:
 Most functionality is done at this point, writing down any issues / bugs here that need to be addressed as they are discovered.
 1. Delete button only effects screen display and doesn't alter the operand / operator values... RESOLVED!
-2. Delete button doesn't effect output value after equals pressed, effects original operands... Work on later!
-3. Issue with decimal precision with basic decimal operations. 1.1 + 4.9 = 6.000000001 -> garbage! 
+2. Delete button doesn't effect output value after equals pressed, effects original operands...
+3. Issue with decimal precision with basic decimal operations. Not sure how to limit decimals in given cases without effecting precision when it is needed. Ex: 1.1 + 4.9 = 6.000000001 -> garbage! 
+
+Features to add in the future:
+1. Allow negative number input! Ex: -1 * -1 = 1. Will need special case for (-) operator.
+5. Allow for keyboard input.
