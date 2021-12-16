@@ -3,6 +3,7 @@ let operandA = "";
 let operandB ="";
 let operator = "";
 let operatorSelected = false;
+let activeOperand = 0; // 0: operandA, 1: operandB. Used for delete button implementation.
 
 // The variables below store the information presented on the calculator screen.
 let statement_contents = "";
@@ -17,12 +18,11 @@ let decimal_button = document.querySelector("#decimal");
 let equals_button = document.getElementById("equals");
 let clear_button = document.getElementById("clear");
 let delete_button = document.getElementById("delete");
- 
 
 // Add event listeners to each button.
 equals_button.addEventListener("click", () => checkEvaluation());
 clear_button.addEventListener("click", () => clearScreenAndMemory());
-delete_button.addEventListener("click", () => deleteStatementContents());
+delete_button.addEventListener("click", () => deleteFromActiveOperand());
 decimal_button.addEventListener("click", () => addToStatementContents(decimal_button));
 
 number_buttons.forEach((button => 
@@ -46,9 +46,17 @@ function addToStatementContents(button) {
     updateStatementScreen(statement_contents);
 }
 
-// Remove one character from statement_contents.
-function deleteStatementContents() {
-    statement_contents = statement_contents.slice(0, -1);
+// Delete Button: Remove one character from active operand.
+function deleteFromActiveOperand() {
+    console.log(activeOperand);
+    if (activeOperand === 0) {
+        operandA = operandA.slice(0, -1);
+        statement_contents = operandA;
+    } else if (activeOperand === 1) {
+        operandB = operandB.slice(0, -1);
+        statement_contents = operandA + operator + operandB;
+    }
+
     updateStatementScreen();
 }
 
@@ -71,6 +79,7 @@ function clearScreenAndMemory()  {
     operatorSelected = false;
     statement_contents = "";
     output_screen.textContent = "";
+    decimal_button.disabled = false;
     updateStatementScreen();
 }
 
@@ -79,49 +88,51 @@ function getOpValues(button) {
 
     // operator value and operator chaining.
     if (button.id === "operator") {
+
         if (operatorSelected === false) {
             operator = button.textContent;
             operatorSelected = true;
             console.log("Operator: " + operator);
         }
         if (operatorSelected === true && operandA != "" && operandB != "") {
+        checkEvaluation();
         operandA = output_screen.textContent;
         operator = button.textContent;
-        statement_contents = operandA;
-        console.log(statement_contents);
         operandB = "";
+        statement_contents = operandA;
         updateStatementScreen();
         }
+
+        activeOperand = 1;
+        decimal_button.disabled = false;
     }
 
     // operandB value.
-    if (operatorSelected === true && button.id === "num") {
+    else if (operatorSelected === true) {
+        if (button.id === "decimal") {
+            decimal_button.disabled =  true;
+        }
         operandB += button.textContent;
         console.log("Operand B: " + operandB);
     }
 
-
-
     // operandA value.
-    if (operatorSelected === false && button.id === "num") {
+    if (operatorSelected === false) {
+        if (button.id === "decimal") {
+            decimal_button.disabled =  true;
+        }
         operandA += button.textContent;
         console.log("Operand A: " + operandA);
     }
 }
 
-// Check argument operand for more than one decimal. Disable decimal button if so.
-function decimalCheck(button, operand) {
-    if (operand.includes(".")) {
-        return true;
-    }
-}
-
 // Check for valid input before calculations, swap operand values after output.
 function checkEvaluation() {
-    output_screen.textContent = evaluateStatement(operator, Number(operandA), Number(operandB));
+    let output_value = evaluateStatement(operator, Number(operandA), Number(operandB));
+    output_screen.textContent = output_value;
+    activeOperand = 0;
+    decimal_button.disabled =  false;
 }
-
-
 
 // Calculator functions: add, subtract, divide, multiply and more!
 function add(a, b) {

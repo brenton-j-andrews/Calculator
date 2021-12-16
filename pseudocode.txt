@@ -27,8 +27,9 @@ Pseudocode:
 Edge case:
 1. Someone might click an operator button before a number. If operandA is still null, ignore any operator buttons.
 
-Step 3: Allow for chaining multiple operators together without hitting equals sign. Ex: 10 * 3 + 5 / 5 = 7. Don't worry about PEMADS I guess.
 
-Pseudocode:
-1. Condition for chaining operators: both operands have values and operator selected. This condition placed in if statement with "equals" button.
-2. 
+(Almost..) End of project update:
+Most functionality is done at this point, writing down any issues / bugs here that need to be addressed as they are discovered.
+1. Delete button only effects screen display and doesn't alter the operand / operator values... RESOLVED!
+2. Delete button doesn't effect output value after equals pressed, effects original operands... Work on later!
+3. Issue with decimal precision with basic decimal operations. 1.1 + 4.9 = 6.000000001 -> garbage! 

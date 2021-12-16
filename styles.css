@@ -1,3 +1,7 @@
+html {
+    min-height: 100%;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -12,17 +16,22 @@ body {
     align-items: center;
     height: 375px;
     width: 250px;
-    background-color: grey;
-    border: solid grey 25px;
+    background-color: #669fb2 ;
+    border: solid #669fb2  25px;
     border-radius: 25px;
-    gap: 10px
+    gap: 10px;
 }
 
+.statement, .statement_output {
+    height: 20px;
+    padding-right: 20px;
+}
 
 .screen {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
     height: 100px;
     width: 250px; 
     background-color: lightgrey;  
@@ -40,7 +49,16 @@ body {
 }
 
 .edit_buttons button {
+    font-size: 16px;
     width: 100px;
+}
+
+#clear {
+    background-color: #e8b877;
+}
+
+#delete {
+    background-color: #e8b877;
 }
 
 /* Input / operator button styling */
@@ -54,5 +72,28 @@ body {
 }
 
 .num_operator_buttons button {
+    background-color: #dadfe1;
     height: 45px;
+    font-size: 16px;
+}
+
+
+/* Footer styling */
+footer {
+    background-color: #669fb2;
+    color: white;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:hover {
+    color: red;
 }
