@@ -89,18 +89,30 @@ function getOpValues(button) {
     // operator value and operator chaining.
     if (button.id === "operator") {
 
+        // Negative number values.
+        if (button.textContent === " - ") {
+            if (operandA === "") {
+                operandA += "-";
+            }
+
+            if (operandB === "" && operatorSelected === true) {
+                operandB += "-";
+            }
+            return;
+        }
+
         if (operatorSelected === false) {
             operator = button.textContent;
             operatorSelected = true;
             console.log("Operator: " + operator);
         }
         if (operatorSelected === true && operandA != "" && operandB != "") {
-        checkEvaluation();
-        operandA = output_screen.textContent;
-        operator = button.textContent;
-        operandB = "";
-        statement_contents = operandA;
-        updateStatementScreen();
+            checkEvaluation();
+            operandA = output_screen.textContent;
+            operator = button.textContent;
+            operandB = "";
+            statement_contents = operandA;
+            updateStatementScreen();
         }
 
         activeOperand = 1;
